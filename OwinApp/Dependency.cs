@@ -6,7 +6,7 @@ namespace OwinApp
     {
         public Dependency()
         {
-            Console.WriteLine("dependency created");
+            ////Console.WriteLine("dependency created");
         }
     }
 }
