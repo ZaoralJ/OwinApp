@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
-
-namespace OwinApp
+﻿namespace OwinApp
 {
+    using System.Web.Http;
+
     [RoutePrefix("api/test")]
     public class TestController : ApiController
     {
@@ -11,31 +10,20 @@ namespace OwinApp
         }
 
         [HttpGet]
-        [Route("xxx")]
-        public int Read()
+        [Route("authorized")]
+        ////[Authorize] 
+        [Authorize(Roles = "any role, apikey, cz.sy.ad.MSSystem_c")]
+        public string Authorized()
         {
-            return 1;
+            return "Authorized method";
         }
 
         [HttpGet]
-        [Route("xxx1")]
-        public int Read1()
+        [Route("anonymous")]
+        [AllowAnonymous]
+        public string Anonymous()
         {
-            return 2;
-        }
-
-        [HttpGet]
-        [Route("xxx1/{wc}/{tag}")]
-        public async Task<int> Read2(string wc, string tag)
-        {
-            return await Task.FromResult(4);
-        }
-
-        [HttpPost]
-        [Route("xxx1")]
-        public int Read3([FromBody] string queryData)
-        {
-            return 5;
+            return "Anonymous method";
         }
     }
 }
