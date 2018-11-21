@@ -8,7 +8,7 @@
 
     public class APIKeyAuthenticationHandler : AuthenticationHandler<APIKeyAuthenticationOptions>
     {
-        protected override async Task<AuthenticationTicket> AuthenticateCoreAsync()
+        protected override Task<AuthenticationTicket> AuthenticateCoreAsync()
         {
             var properties = new AuthenticationProperties();
             
@@ -22,17 +22,17 @@
 
                     if (apiKey != Options.Apikey)
                     {
-                        return new AuthenticationTicket(null, properties);
+                        return Task.FromResult(new AuthenticationTicket(null, properties));
                     }
                 }
                 else
                 {
-                    return new AuthenticationTicket(null, properties);
+                    return Task.FromResult(new AuthenticationTicket(null, properties));
                 }
             }
             else
             {
-                return new AuthenticationTicket(null, properties);
+                return Task.FromResult(new AuthenticationTicket(null, properties));
             }
 
             var userClaim = new Claim(ClaimTypes.Name, "DL");
@@ -42,7 +42,7 @@
             var identity = new ClaimsIdentity(allClaims, "ApiKey");
 
             // resulting identity values go back to caller
-            return new AuthenticationTicket(identity, properties);
+            return Task.FromResult(new AuthenticationTicket(identity, properties));
         }
     }
 }

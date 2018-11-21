@@ -1,4 +1,6 @@
-﻿namespace OwinApp.BasicAuth
+﻿using System.Threading.Tasks;
+
+namespace OwinApp.BasicAuth
 {
     using System.Security.Claims;
     using Microsoft.Owin;
@@ -6,7 +8,7 @@
 
     public class BasicAuthenticationMiddleware : AuthenticationMiddleware<BasicAuthenticationOptions>
     {
-        public delegate ClaimsIdentity CredentialValidationFunction(string id, string secret);
+        public delegate Task<ClaimsIdentity> CredentialValidationFunction(string id, string secret);
 
         public BasicAuthenticationMiddleware(OwinMiddleware next, BasicAuthenticationOptions options)
             : base(next, options)

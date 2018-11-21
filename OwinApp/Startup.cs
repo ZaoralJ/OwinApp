@@ -8,11 +8,11 @@
     using Owin;
     using OWIN.Windsor.DependencyResolverScopeMiddleware;
 
-    public class Startup
+    public sealed class Startup
     {
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
-        public void Configuration(IAppBuilder appBuilder)
+        public static void Configuration(IAppBuilder appBuilder)
         {
             var container = BootstrapContainer();
 
@@ -29,13 +29,13 @@
 
             // set custom identity
             var identityDataProvider = container.Resolve<IIdentityDataProvider>();
-            appBuilder.UseBasicAuthentication((id, secret) => identityDataProvider.GetIdentity(id, secret));
+            appBuilder.UseBasicAuthentication(async (id, secret) => await identityDataProvider.GetIdentity(id, secret).ConfigureAwait(false));
 
             appBuilder.UseWindsorDependencyResolverScope(config, container);
             appBuilder.UseWebApi(config);
         }
 
-        private IWindsorContainer BootstrapContainer()
+        private static IWindsorContainer BootstrapContainer()
         {
             var container = new WindsorContainer();
 
