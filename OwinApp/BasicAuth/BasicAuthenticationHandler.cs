@@ -18,7 +18,7 @@
             }
 
             var token = authzValue.Substring("Basic ".Length).Trim();
-            var claimsIdentity = TryGetPrincipalFromBasicCredentials(token, Options.CredentialValidationFunction);
+            var claimsIdentity = await TryGetPrincipalFromBasicCredentials(token, Options.CredentialValidationFunction).ConfigureAwait(false);
 
             if (claimsIdentity == null)
             {
@@ -42,7 +42,7 @@
             return Task.FromResult<object>(null);
         }
 
-        private ClaimsIdentity TryGetPrincipalFromBasicCredentials(string credentials, BasicAuthenticationMiddleware.CredentialValidationFunction validate)
+        private static Task<ClaimsIdentity> TryGetPrincipalFromBasicCredentials(string credentials, BasicAuthenticationMiddleware.CredentialValidationFunction validate)
         {
             string pair;
             try

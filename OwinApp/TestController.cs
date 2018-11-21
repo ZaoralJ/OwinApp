@@ -5,8 +5,11 @@
     [RoutePrefix("api/test")]
     public class TestController : ApiController
     {
+        private readonly IDependency _dependency;
+
         public TestController(IDependency dependency)
         {
+            _dependency = dependency;
         }
 
         [HttpGet]
@@ -15,7 +18,7 @@
         [Authorize(Roles = "any role, apikey, cz.sy.ad.MSSystem_c")]
         public string Authorized()
         {
-            return "Authorized method";
+            return "Authorized method" + _dependency;
         }
 
         [HttpGet]
@@ -23,7 +26,7 @@
         [AllowAnonymous]
         public string Anonymous()
         {
-            return "Anonymous method";
+            return "Anonymous method" + _dependency;
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace OwinApp
+﻿using System.Threading.Tasks;
+
+namespace OwinApp
 {
     using System.Security.Claims;
 
     public interface IIdentityDataProvider
     {
-        ClaimsIdentity GetIdentity(string id, string secret);
+        Task<ClaimsIdentity> GetIdentity(string id, string secret);
     }
 }
