@@ -1,7 +1,6 @@
-﻿namespace OwinApp
+namespace OwinApp
 {
     public interface IDependency
-    {
-        
+    {`        
     }
 }
